@@ -8,6 +8,8 @@ if (!isset($_SESSION['user_id'])) {
 
 $user_id = $_SESSION['user_id'];
 
+//add
+
 // Fetch all orders with items
 $stmt = $pdo->prepare("
     SELECT o.*, 

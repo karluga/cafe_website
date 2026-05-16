@@ -38,7 +38,13 @@ $services = $service->readAll($search);
                             <!-- Add to Favorites Button -->
                             <?php if (isset($_SESSION['user_id'])): ?>
                                 <a href="favorites.php?add=<?= $item['id'] ?>" class="btn btn-outline-danger btn-sm mt-2">
-                                    ❤️ Add to Favorites
+                                    Add to Favorites
+                                </a>
+                            <?php endif; ?>
+
+                            <?php if (isset($_SESSION['user_id'])): ?>
+                                <a href="order-history.php?add=<?= $item['id'] ?>" class="btn btn-outline-success btn-sm mt-2">
+                                    Order
                                 </a>
                             <?php endif; ?>
                         </div>
