@@ -45,11 +45,12 @@ try {
         CREATE TABLE IF NOT EXISTS favorites (
             id INT AUTO_INCREMENT PRIMARY KEY,
             user_id INT NOT NULL,
-            item_id INT NOT NULL,
+            service_id INT NOT NULL,
             created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-            UNIQUE KEY unique_fav (user_id, item_id),
-            FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
-        )
+            UNIQUE KEY unique_fav (user_id, service_id),
+            FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
+            FOREIGN KEY (service_id) REFERENCES services(id) ON DELETE CASCADE
+        );
     ");
 
     $pdo->exec("

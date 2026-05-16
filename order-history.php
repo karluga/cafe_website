@@ -1,6 +1,5 @@
 <?php
-session_start();
-require_once 'includes/db.php';
+require_once 'includes/header.php';
 
 if (!isset($_SESSION['user_id'])) {
     header("Location: login.php");
@@ -24,74 +23,50 @@ $stmt->execute([$user_id]);
 $orders = $stmt->fetchAll();
 ?>
 
-<!DOCTYPE html>
-<html lang="en">
+<div class="container my-5">
+    <h1 class="text-center mb-5">📜 Order History</h1>
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Order History - Cafe</title>
-    <link rel="stylesheet" href="css/style.css">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <style>
-        .order-card {
-            transition: all 0.3s;
-        }
-
-        .order-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-        }
-    </style>
-</head>
-
-<body>
-    <?php include 'header.php'; ?>
-
-    <div class="container my-5">
-        <h1 class="text-center mb-5">📜 Order History</h1>
-
-        <?php if (empty($orders)): ?>
-            <div class="text-center py-5">
-                <h4>No orders yet</h4>
-                <a href="menu.php" class="btn btn-primary mt-3">Order Now</a>
-            </div>
-        <?php else: ?>
-            <div class="row">
-                <?php foreach ($orders as $order): ?>
-                    <div class="col-lg-8 mx-auto mb-4">
-                        <div class="card order-card">
-                            <div class="card-header d-flex justify-content-between align-items-center">
-                                <strong>Order #
-                                    <?= str_pad($order['id'], 6, '0', STR_PAD_LEFT) ?>
-                                </strong>
-                                <span
-                                    class="badge bg-<?= $order['status'] == 'completed' ? 'success' : ($order['status'] == 'cancelled' ? 'danger' : 'warning') ?>">
-                                    <?= ucfirst($order['status']) ?>
-                                </span>
-                            </div>
-                            <div class="card-body">
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <p><strong>Date:</strong>
-                                            <?= date('d M Y • h:i A', strtotime($order['order_date'])) ?>
-                                        </p>
-                                    </div>
-                                    <div class="col-md-6 text-md-end">
-                                        <p><strong>Total:</strong> <span class="fw-bold">₹
-                                                <?= number_format($order['total_amount'], 2) ?>
-                                            </span></p>
-                                    </div>
+    <?php if (empty($orders)): ?>
+        <div class="text-center py-5">
+            <h4>No orders yet</h4>
+            <a href="menu.php" class="btn btn-primary mt-3">Order Now</a>
+        </div>
+    <?php else: ?>
+        <div class="row">
+            <?php foreach ($orders as $order): ?>
+                <div class="col-lg-8 mx-auto mb-4">
+                    <div class="card order-card">
+                        <div class="card-header d-flex justify-content-between align-items-center">
+                            <strong>Order #
+                                <?= str_pad($order['id'], 6, '0', STR_PAD_LEFT) ?>
+                            </strong>
+                            <span
+                                class="badge bg-<?= $order['status'] == 'completed' ? 'success' : ($order['status'] == 'cancelled' ? 'danger' : 'warning') ?>">
+                                <?= ucfirst($order['status']) ?>
+                            </span>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <p><strong>Date:</strong>
+                                        <?= date('d M Y • h:i A', strtotime($order['order_date'])) ?>
+                                    </p>
                                 </div>
-                                <p><strong>Items:</strong>
-                                    <?= htmlspecialchars($order['items']) ?>
-                                </p>
+                                <div class="col-md-6 text-md-end">
+                                    <p><strong>Total:</strong> <span class="fw-bold">₹
+                                            <?= number_format($order['total_amount'], 2) ?>
+                                        </span></p>
+                                </div>
                             </div>
+                            <p><strong>Items:</strong>
+                                <?= htmlspecialchars($order['items']) ?>
+                            </p>
                         </div>
                     </div>
-                <?php endforeach; ?>
-            </div>
-        <?php endif; ?>
-    </div>
-
-    <?php include 'footer.php'; ?>
+                </div>
+            <?php endforeach; ?>
+        </div>
+    <?php endif; ?>
+</div>
+    
+<?php include 'includes/footer.php'; ?>
