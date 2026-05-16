@@ -48,7 +48,11 @@ $services = $serviceObj->readAll();
 
     <div class="d-flex justify-content-between align-items-center mb-4">
         <h2>Admin Dashboard</h2>
-        <a href="add_service.php" class="btn btn-success">+ Add New Menu Item</a>
+        <div>
+            <a href="add_service.php" class="btn btn-success me-2">+ Add New Service</a>
+            <a href="reservations.php" class="btn btn-info me-2">📅 Reservations</a>
+            <a href="orders.php" class="btn btn-warning">📦 Orders</a>
+        </div>
     </div>
 
     <?php if ($success): ?>
