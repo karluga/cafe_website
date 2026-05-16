@@ -7,8 +7,26 @@ if (!isset($_SESSION['user_id'])) {
 }
 
 $user_id = $_SESSION['user_id'];
+$order_id = '';
 
 //add
+if (isset($_GET['add']) && is_numeric($_GET['add'])) {
+    $stmt = $pdo->prepare("INSERT IGNORE INTO orders (user_id) VALUES (?)");
+    $stmt->execute([$user_id]);
+    $order_id = $pdo->lastInsertId();
+
+    $service_id = (int) $_GET['add'];
+    $stmt = $pdo->prepare("INSERT IGNORE INTO order_items (order_id, menu_id, quantity, price) VALUES (?, ?, ?, ?)");
+    $stmt->execute([$order_id, $service_id, 1, 6.99]);
+
+    $stmt = $pdo->prepare("SELECT price FROM order_items WHERE order_id = ?");
+    $stmt->execute([$order_id]);
+    $price = $stmt->fetchColumn();
+
+    $stmt = $pdo->prepare("UPDATE orders SET total_amount = total_amount + ? WHERE user_id = ? AND id = ?");
+    $stmt->execute([$price, $user_id, $order_id]);
+    $success = "Order added!";
+}
 
 // Fetch all orders with items
 $stmt = $pdo->prepare("
@@ -55,7 +73,7 @@ $orders = $stmt->fetchAll();
                                     </p>
                                 </div>
                                 <div class="col-md-6 text-md-end">
-                                    <p><strong>Total:</strong> <span class="fw-bold">₹
+                                    <p><strong>Total:</strong> <span class="fw-bold">€
                                             <?= number_format($order['total_amount'], 2) ?>
                                         </span></p>
                                 </div>

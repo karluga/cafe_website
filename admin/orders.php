@@ -80,7 +80,7 @@ $orders = $stmt->fetchAll();
                             <td>
                                 <?= htmlspecialchars($order['items'] ?? 'N/A') ?>
                             </td>
-                            <td><strong>₹
+                            <td><strong>€
                                     <?= number_format($order['total_amount'], 2) ?>
                                 </strong></td>
                             <td>
