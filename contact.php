@@ -56,18 +56,4 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </form>
 </div>
 
-<script>
-    function validateInput() {
-        const name = document.getElementById('name').value.trim();
-        const email = document.getElementById('email').value.trim();
-        const msg = document.getElementById('message').value.trim();
-
-        if (!name || !email || !msg) {
-            alert("All fields are required!");
-            return false;
-        }
-        return true;
-    }
-</script>
-
 <?php require_once 'includes/footer.php'; ?>

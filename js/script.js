@@ -45,20 +45,18 @@ document.addEventListener("DOMContentLoaded", function()
     });
 });
 
-function validateInput()
+function validateInput() 
 {
-    let name = document.getElementById("name").value;
-    let email = document.getElementById("email").value;
-    let message = document.getElementById("message").value;
+    const name = document.getElementById('name').value.trim();
+    const email = document.getElementById('email').value.trim();
+    const msg = document.getElementById('message').value.trim();
 
-    if(name.match("[a-zA-Z]") && email.match("^[a-zA-Z0-9._&+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$") && message.length > 0)
+    if(!name || !email || !msg) 
     {
-        window.location.replace("contact.html");
+        alert("All fields are required!");
+        return false;
     }
-    else
-    {
-        alert("One of the input fields have been filled in incorrectly. Here are some reasons why this can pop up: Name contains numbers, incorrect email, no message was written...");
-    }
+    return true;
 }
 
 function getCurrentYear()

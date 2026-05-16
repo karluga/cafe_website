@@ -13,12 +13,14 @@ try {
         image VARCHAR(255) DEFAULT 'images/food-default.jpg',
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
     )");
+    
     $pdo->exec("
         INSERT INTO services (title, description, image) VALUES
         ('Main Dishes', 'Steaks, pasta, and seasonal meals prepared fresh daily.', 'images/food1.jpg'),
         ('Desserts', 'Handmade cakes, pastries and sweet delights.', 'images/food2.jpg'),
         ('Drinks', 'Wine, cocktails, fresh juices and specialty coffee.', 'images/food3.jpg');
     ");
+
     // Create users table
     $pdo->exec("CREATE TABLE IF NOT EXISTS users (
         id INT AUTO_INCREMENT PRIMARY KEY,
