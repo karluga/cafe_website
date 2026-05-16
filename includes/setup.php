@@ -13,7 +13,7 @@ try {
         image VARCHAR(255) DEFAULT 'images/food-default.jpg',
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
     )");
-    
+
     $pdo->exec("
         INSERT INTO services (title, description, image) VALUES
         ('Main Dishes', 'Steaks, pasta, and seasonal meals prepared fresh daily.', 'images/food1.jpg'),
@@ -27,6 +27,8 @@ try {
         username VARCHAR(50) UNIQUE NOT NULL,
         email VARCHAR(100) UNIQUE NOT NULL,
         password VARCHAR(255) NOT NULL,
+        role TINYINT(1) DEFAULT 0 NOT NULL, -- 0 = regular user, 1 = admin
+        profile_pic VARCHAR(255) DEFAULT NULL,
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
     )");
 

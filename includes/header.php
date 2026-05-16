@@ -52,10 +52,41 @@ define('BASE_URL', '/cafe_website/');   // ← Change only this if folder name c
                     <li class="nav-item"><a class="nav-link" href="/cafe_website/contact.php">Contact</a></li>
 
                     <?php if (isset($_SESSION['user_id'])): ?>
-                        <li class="nav-item"><a class="nav-link" href="/cafe_website/admin/dashboard.php">Dashboard</a></li>
-                        <li class="nav-item"><a class="nav-link text-warning" href="/cafe_website/logout.php">Logout (
-                                <?= htmlspecialchars($_SESSION['username']) ?>)
-                            </a></li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle text-warning d-flex align-items-center gap-2" href="#"
+                                role="button" data-bs-toggle="dropdown" aria-expanded="false">
+
+                                <!-- Profile Picture -->
+                                <?php
+                                $profile_pic = $_SESSION['profile_pic'] ?? '';
+                                if (!empty($profile_pic) && file_exists($profile_pic)):
+                                    ?>
+                                    <img src="/cafe_website/<?= htmlspecialchars($profile_pic) ?>" alt="Profile"
+                                        class="rounded-circle border border-light"
+                                        style="width: 28px; height: 28px; object-fit: cover;">
+                                <?php else: ?>
+                                    <span style="font-size: 1.3rem;">👤</span>
+                                <?php endif; ?>
+
+                                <span><?= htmlspecialchars($_SESSION['username']) ?></span>
+                            </a>
+
+                            <ul class="dropdown-menu dropdown-menu-end">
+                                <li><a class="dropdown-item" href="/cafe_website/profile.php">My Profile</a></li>
+
+                                <?php
+                                // Show Dashboard only for Admin (role = 1)
+                                if (isset($_SESSION['role']) && $_SESSION['role'] == 1):
+                                    ?>
+                                    <li><a class="dropdown-item" href="/cafe_website/admin/dashboard.php">Dashboard</a></li>
+                                <?php endif; ?>
+
+                                <li>
+                                    <hr class="dropdown-divider">
+                                </li>
+                                <li><a class="dropdown-item text-danger" href="/cafe_website/logout.php">Logout</a></li>
+                            </ul>
+                        </li>
                     <?php else: ?>
                         <li class="nav-item"><a class="nav-link" href="/cafe_website/login.php">Login</a></li>
                         <li class="nav-item"><a class="nav-link" href="/cafe_website/register.php">Register</a></li>
